@@ -62,7 +62,7 @@ function removeItem(id) {
 }
 
 function applyPromo() {
-	if ((promoInput.value = "SALE10")) {
+	if ((promoInput.value === "SALE10")) {
 		discount = 0.1;
 	}
 	renderCart();
@@ -76,6 +76,7 @@ function clearCart() {
 function renderCart() {
 	cartItemsEl.innerHTML = "";
 	let total = 0;
+	let counter = 0
 	cart.forEach((item) => {
 		const lineTotal = item.price;
 		const li = document.createElement("li");
@@ -91,13 +92,14 @@ function renderCart() {
 		li.querySelector(".remove").addEventListener("click", () => removeItem(item.id));
 		cartItemsEl.appendChild(li);
 		total += item.price * item.qty;
+		counter += item.qty
 	});
 
 	if (discount) {
 		total = total - total * discount;
 	}
 
-	badgeEl.textContent = cart.length;
+	badgeEl.textContent = counter;
 	totalEl.textContent = total;
 	emptyMsg.hidden = true;
 }
